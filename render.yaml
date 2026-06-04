@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: raksh-ai
+    runtime: node
+    repo: https://github.com/Mansij19/RAKSH_AI
+    branch: main
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ENABLE_MEMORY_FALLBACK
+        value: true
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: FEATHERLESS_MODEL
+        value: deepseek-ai/DeepSeek-R1
+      - key: FEATHERLESS_BASE_URL
+        value: https://api.featherless.ai/v1
+      - key: MONGODB_URI
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FEATHERLESS_API_KEY
+        sync: false

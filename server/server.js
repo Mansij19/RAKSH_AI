@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import { 
   connectDB, 
   getIncidents, 
@@ -28,6 +30,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const clientDistPath = path.resolve(__dirname, "../client/dist");
 
 // Middlewares
 app.use(cors({
@@ -397,9 +402,16 @@ app.post("/api/ai/area-summary", async (req, res) => {
     res.status(500).json({ error: "Failed to generate area safety summary." });
   }
 });
-app.get("/", (req, res) => {
-  res.send("RakshAI Backend is running");
-});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(clientDistPath));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientDistPath, "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("RakshAI Backend is running");
+  });
+}
 
 // Start server
 if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
