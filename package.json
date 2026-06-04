@@ -1,0 +1,23 @@
+{
+  "name": "raksh-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RakshAI - Community-Powered AI Safety Navigation",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace raksh-ai-server\" \"npm run dev --workspace raksh-ai-client\"",
+    "start": "npm run start --workspace raksh-ai-server",
+    "build": "npm run build --workspace raksh-ai-client",
+    "check": "npm run check --workspace raksh-ai-server && npm run build --workspace raksh-ai-client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=18.18.0",
+    "npm": ">=9.0.0"
+  }
+}
