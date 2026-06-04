@@ -397,7 +397,9 @@ app.post("/api/ai/area-summary", async (req, res) => {
     res.status(500).json({ error: "Failed to generate area safety summary." });
   }
 });
-
+app.get("/", (req, res) => {
+  res.send("RakshAI Backend is running");
+});
 // Start server
 app.listen(PORT, () => {
   console.log(`[RakshAI Server] running on http://localhost:${PORT}`);
